@@ -1,0 +1,12 @@
+FROM 763104351884.dkr.ecr.us-east-1.amazonaws.com/pytorch-inference:2.3.0-cpu-py311-ubuntu20.04-sagemaker
+
+# Copy over code etc
+COPY . /usr/src/code/deployment
+
+RUN pip install -r /usr/src/code/deployment/requirements.txt
+
+ENV PYTHONPATH "${PYTHONPATH}:/usr/src/code/deployment"
+WORKDIR /usr/src/code/deployment
+
+ENTRYPOINT ["python", "server.py"]
+
